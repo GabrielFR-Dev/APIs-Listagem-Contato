@@ -1,14 +1,32 @@
 import pool from './conexao.js';
 
+async function executaQuery(conexao, query){
+    const resultado_query = await conexao.query(query)
+    const resposta = resultado_query[0];
+
+    return resposta
+}
+
 
 export async function retornaMedicos() {
     const conexao = await pool.getConnection();
 
-    const query = await conexao.query('SELECT * FROM medicos');
+    const query = 'SELECT * FROM medicos';
 
-    const query_resultado = query[0];
+    const medicos = executaQuery(conexao, query);
 
     conexao.release();
 
-    return query_resultado
+    return medicos;
+}
+
+export async function retornaMedicosID(id) {
+    const conexao = await pool.getConnection();
+    const query = 'SELECT * FROM medicos WHERE id= '+id;
+
+    const medicos = executaQuery(conexao, query);
+
+    conexao.release();
+    
+    return medicos;
 }
