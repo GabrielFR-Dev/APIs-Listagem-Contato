@@ -25,11 +25,12 @@ app.get('/medicos/:id', async(req, res) => {
     }
 });
 
-app.listen(9000, async() => {
+const port = process.env.PORT || 3000;
+app.listen(port, async() => {
     const data = new Date();
     const conexao = await pool.getConnection();
 
-    console.log(`Servidor iniciado em ${data}`);
+    console.log(`Servidor iniciado na porta ${port} em ${data}`);
     
 
     conexao.release();
